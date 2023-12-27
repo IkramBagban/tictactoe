@@ -4,24 +4,31 @@ let board = [
     ['', '', '']
 ];
 
-let currentPlayer;
-let isComputerTurn;
-let isSinglePlayer = true; 
+let currentPlayer, isComputerTurn, isSinglePlayer = true;
+let playerScore = 0, computerScore = 0;
+
+// Initialize game
 function startNewGame() {
+    resetBoard();
+    currentPlayer = 'X';
+    isComputerTurn = isSinglePlayer && currentPlayer === 'O';
+    updateTurnDisplay();
+    updateBoard();
+    if (isComputerTurn) {
+        setTimeout(makeComputerMove, 500);
+    }
+}
+
+// Reset the board for a new game
+function resetBoard() {
     for (let row = 0; row < 3; row++) {
         for (let col = 0; col < 3; col++) {
             board[row][col] = '';
         }
     }
-    currentPlayer = 'X';
-    isComputerTurn = false;
-    updateBoard();
-    updateTurnDisplay();
-    if (isSinglePlayer && currentPlayer === 'O') {
-        setTimeout(makeComputerMove, 500);
-    }
 }
 
+// Handle player's move
 function makeMove(row, col) {
     if (board[row][col] === '') {
         board[row][col] = currentPlayer;
@@ -29,29 +36,53 @@ function makeMove(row, col) {
     }
 }
 
+// Process the turn
 function handleTurn() {
     updateBoard();
     if (checkWinner(currentPlayer)) {
-        alert(currentPlayer + ' Wins!');
-        startNewGame();
-        return;
+        updateScore();
+        highlightWinningCombination();
+        setTimeout(promptForNextRound, 200); // Delay for visual effect
     } else if (isBoardFull()) {
-        alert('Draw!');
-        startNewGame();
-        return;
+        setTimeout(promptForNextRound, 200);
+    } else {
+        switchPlayer();
     }
-    switchPlayer();
 }
 
+// Update the scores
+function updateScore() {
+    if (currentPlayer === 'X') {
+        playerScore++;
+        document.getElementById('playerScore').innerText = playerScore.toString();
+    } else {
+        computerScore++;
+        document.getElementById('computerScore').innerText = computerScore.toString();
+    }
+}
+
+// Highlight the winning cells (basic implementation)
+function highlightWinningCombination() {
+    // This function needs to identify the winning cells and apply a style to them.
+    // Implement logic here based on how you want to highlight the winning combination.
+}
+
+// Prompt for the next round
+function promptForNextRound() {
+    if(confirm('Play again?')) {
+        startNewGame();
+    }
+}
+
+// Switch the player
 function switchPlayer() {
     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
     isComputerTurn = isSinglePlayer && currentPlayer === 'O';
     updateTurnDisplay();
     if (isComputerTurn) {
-        setTimeout(makeComputerMove, 500);
+        setTimeout(makeComputerMove, 400);
     }
 }
-
 
 function makeComputerMove() {
     let moveMade = tryToWin('O'); 
@@ -88,6 +119,7 @@ document.getElementById('twoPlayerBtn').addEventListener('click', function() {
     isSinglePlayer = false;
     startNewGame();
 });
+
 
 function tryToWin(player) {
     for (let row = 0; row < 3; row++) {
