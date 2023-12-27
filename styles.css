@@ -77,3 +77,8 @@ button:hover {
 .mode-selector button {
     padding: 5px 10px;
 }
+
+.highlight {
+    background-color: yellow; 
+    color: black; 
+}

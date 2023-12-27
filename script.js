@@ -7,9 +7,9 @@ let board = [
 let currentPlayer, isComputerTurn, isSinglePlayer = true;
 let playerScore = 0, computerScore = 0;
 
-// Initialize game
 function startNewGame() {
     resetBoard();
+    clearHighlights();
     currentPlayer = 'X';
     isComputerTurn = isSinglePlayer && currentPlayer === 'O';
     updateTurnDisplay();
@@ -19,7 +19,6 @@ function startNewGame() {
     }
 }
 
-// Reset the board for a new game
 function resetBoard() {
     for (let row = 0; row < 3; row++) {
         for (let col = 0; col < 3; col++) {
@@ -28,7 +27,6 @@ function resetBoard() {
     }
 }
 
-// Handle player's move
 function makeMove(row, col) {
     if (board[row][col] === '') {
         board[row][col] = currentPlayer;
@@ -36,13 +34,14 @@ function makeMove(row, col) {
     }
 }
 
-// Process the turn
 function handleTurn() {
     updateBoard();
-    if (checkWinner(currentPlayer)) {
+    const winningLine = checkWinner(currentPlayer);
+
+    if (winningLine) {
         updateScore();
-        highlightWinningCombination();
-        setTimeout(promptForNextRound, 200); // Delay for visual effect
+        highlightWinningCombination(winningLine);
+        setTimeout(promptForNextRound, 200); 
     } else if (isBoardFull()) {
         setTimeout(promptForNextRound, 200);
     } else {
@@ -50,7 +49,7 @@ function handleTurn() {
     }
 }
 
-// Update the scores
+
 function updateScore() {
     if (currentPlayer === 'X') {
         playerScore++;
@@ -61,20 +60,32 @@ function updateScore() {
     }
 }
 
-// Highlight the winning cells (basic implementation)
 function highlightWinningCombination() {
-    // This function needs to identify the winning cells and apply a style to them.
-    // Implement logic here based on how you want to highlight the winning combination.
+    const winningLine = checkWinner(currentPlayer);
+    if (winningLine) {
+        winningLine.forEach(([row, col]) => {
+            const cell = document.getElementById('row' + row).children[col];
+            cell.classList.add('highlight'); 
+         });
+    }
+}
+function clearHighlights() {
+    for (let row = 0; row < 3; row++) {
+        for (let col = 0; col < 3; col++) {
+            let cell = document.getElementById('row' + row).children[col];
+            cell.classList.remove('highlight');
+        }
+    }
 }
 
-// Prompt for the next round
+
+
 function promptForNextRound() {
     if(confirm('Play again?')) {
         startNewGame();
     }
 }
 
-// Switch the player
 function switchPlayer() {
     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
     isComputerTurn = isSinglePlayer && currentPlayer === 'O';
@@ -166,18 +177,26 @@ function updateBoard() {
 }
 
 function checkWinner(player) {
-    for (let i = 0; i < 3; i++) {
-        if (board[i][0] === player && board[i][1] === player && board[i][2] === player ||
-            board[0][i] === player && board[1][i] === player && board[2][i] === player) {
-            return true;
+    const lines = [
+        [[0, 0], [0, 1], [0, 2]],
+        [[1, 0], [1, 1], [1, 2]],
+        [[2, 0], [2, 1], [2, 2]],
+        [[0, 0], [1, 0], [2, 0]],
+        [[0, 1], [1, 1], [2, 1]],
+        [[0, 2], [1, 2], [2, 2]],
+        [[0, 0], [1, 1], [2, 2]],
+        [[0, 2], [1, 1], [2, 0]]
+    ];
+
+    for (let line of lines) {
+        if (line.every(([row, col]) => board[row][col] === player)) {
+            return line;
         }
     }
-    if (board[0][0] === player && board[1][1] === player && board[2][2] === player ||
-        board[0][2] === player && board[1][1] === player && board[2][0] === player) {
-        return true;
-    }
-    return false;
+
+    return null;
 }
+
 
 function isBoardFull() {
     for (let row = 0; row < 3; row++) {
