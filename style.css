@@ -1,0 +1,106 @@
+body {
+    background-color: #f7f7f7;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.game-container {
+    width: 100%;
+    max-width: 360px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.game-status, .scoreboard, .game-info, .board-container, .controls {
+    margin-bottom: 15px;
+}
+
+#currentMode, #currentDifficulty {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.scoreboard div, .difficulty-selector {
+    font-size: 0.9em;
+}
+
+h2 {
+    font-size: 1.2em;
+    background-color: #4a90e2;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+.col {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #ddd;
+    margin: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.col:hover {
+    background-color: #e3f2fd;
+}
+
+button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em;
+}
+
+button:last-child {
+    margin-right: 0;
+}
+
+button:hover {
+    background-color: #357abd;
+}
+
+button.active {
+    background-color: #357abd;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+}
+
+.difficulty-selector select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+@media (max-width: 600px) {
+    .col {
+        width: 20vw;
+        height: 20vw;
+    }
+}

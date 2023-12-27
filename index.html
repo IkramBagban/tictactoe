@@ -4,59 +4,51 @@
     <meta charset="UTF-8">
     <title>Tic-Tac-Toe Game</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="game-status">
-        <div id="currentMode"></div>
-        <div id="currentDifficulty"></div>
-    </div>
-    
-    <div class="scoreboard">
-        <div>Player (X) Score: <span id="playerScore">0</span></div>
-        <div>Computer (O) Score: <span id="computerScore">0</span></div>
-    </div>
-    <div class="game-info">
-        <h2 id="playerTurn">Player: X's Turn</h2>
-    </div>
-    <div class="container">
-        <!-- 3x3 Grid -->
-        <div id="row0" class="row">
-            <div class="col" onclick="makeMove(0, 0)"></div>
-            <div class="col" onclick="makeMove(0, 1)"></div>
-            <div class="col" onclick="makeMove(0, 2)"></div>
+    <div class="game-container">
+        <div class="game-status">
+            <div id="currentMode"></div>
+            <div id="currentDifficulty" class="difficulty"></div>
         </div>
-        <div id="row1" class="row">
-            <div class="col" onclick="makeMove(1, 0)"></div>
-            <div class="col" onclick="makeMove(1, 1)"></div>
-            <div class="col" onclick="makeMove(1, 2)"></div>
+        <div class="scoreboard">
+            <div>Player (X) Score: <span id="playerScore">0</span></div>
+            <div>Computer (O) Score: <span id="computerScore">0</span></div>
         </div>
-        <div id="row2" class="row">
-            <div class="col" onclick="makeMove(2, 0)"></div>
-            <div class="col" onclick="makeMove(2, 1)"></div>
-            <div class="col" onclick="makeMove(2, 2)"></div>
+        <div class="game-info">
+            <h2 id="playerTurn">Player: X's Turn</h2>
         </div>
-    </div>
-    <div style="display: flex; justify-content: center; margin-top: 5px;" >
-        <button onclick="resetGame()">Reset Game</button>   
-    </div>
-    <div class="game-controls">
-        <div class="mode-selector">
+        <div class="board-container">
+            <div id="row0" class="row">
+                <div class="col" onclick="makeMove(0, 0)"></div>
+                <div class="col" onclick="makeMove(0, 1)"></div>
+                <div class="col" onclick="makeMove(0, 2)"></div>
+            </div>
+            <div id="row1" class="row">
+                <div class="col" onclick="makeMove(1, 0)"></div>
+                <div class="col" onclick="makeMove(1, 1)"></div>
+                <div class="col" onclick="makeMove(1, 2)"></div>
+            </div>
+            <div id="row2" class="row">
+                <div class="col" onclick="makeMove(2, 0)"></div>
+                <div class="col" onclick="makeMove(2, 1)"></div>
+                <div class="col" onclick="makeMove(2, 2)"></div>
+            </div>
+        </div>
+        <div class="controls">
+            <button onclick="resetGame()">Reset Game</button>
             <button id="singlePlayerBtn">Single Player</button>
             <button id="twoPlayerBtn">Two Players</button>
-        </div>
-        <br>
-        <div id="difficultySelector" class="difficulty-selector">
-            <label for="difficultyLevel">Difficulty:</label>
-            <select id="difficultyLevel">
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-            </select>
+            <div class="difficulty-selector">
+                <select id="difficultyLevel">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
         </div>
     </div>
-        
     <script src="script.js"></script>
 </body>
 </html>
