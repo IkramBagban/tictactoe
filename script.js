@@ -6,26 +6,24 @@ let board = [
 
 let currentPlayer;
 let isComputerTurn;
-let playerScore = 0;
-let computerScore = 0;
-
+let isSinglePlayer = true; 
 function startNewGame() {
     for (let row = 0; row < 3; row++) {
         for (let col = 0; col < 3; col++) {
             board[row][col] = '';
         }
     }
-    currentPlayer = Math.random() < 0.5 ? 'X' : 'O';
-    isComputerTurn = currentPlayer === 'O'; 
-    updateTurnDisplay();
+    currentPlayer = 'X';
+    isComputerTurn = false;
     updateBoard();
-    if (isComputerTurn) {
-        setTimeout(makeComputerMove, 500); 
+    updateTurnDisplay();
+    if (isSinglePlayer && currentPlayer === 'O') {
+        setTimeout(makeComputerMove, 500);
     }
 }
 
 function makeMove(row, col) {
-    if (!isComputerTurn && board[row][col] === '') {
+    if (board[row][col] === '') {
         board[row][col] = currentPlayer;
         handleTurn();
     }
@@ -34,34 +32,31 @@ function makeMove(row, col) {
 function handleTurn() {
     updateBoard();
     if (checkWinner(currentPlayer)) {
-        let winner = currentPlayer === 'X' ? 'Player' : 'Computer';
-        document.getElementById('playerTurn').innerText = 'Player ' + currentPlayer + ' Wins!';
-        alert(winner + ' Wins!');
-        if (winner === 'Player') {
-            playerScore++;
-            document.getElementById('playerScore').textContent = playerScore;
-        } else {
-            computerScore++;
-            document.getElementById('computerScore').textContent = computerScore;
-        }
+        alert(currentPlayer + ' Wins!');
         startNewGame();
         return;
     } else if (isBoardFull()) {
-        document.getElementById('playerTurn').innerText = 'Game is a Draw!';
-        alert('Game is a Draw!');
+        alert('Draw!');
         startNewGame();
         return;
     }
+    switchPlayer();
+}
+
+function switchPlayer() {
     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-    isComputerTurn = !isComputerTurn;
+    isComputerTurn = isSinglePlayer && currentPlayer === 'O';
     updateTurnDisplay();
     if (isComputerTurn) {
         setTimeout(makeComputerMove, 500);
     }
 }
 
+
 function makeComputerMove() {
     let moveMade = tryToWin('O'); 
+
+    if(!isSinglePlayer) return;
 
     if (!moveMade) {
         moveMade = blockOpponentWin('X');
@@ -83,6 +78,16 @@ function makeComputerMove() {
     }
     handleTurn();
 }
+
+document.getElementById('singlePlayerBtn').addEventListener('click', function() {
+    isSinglePlayer = true;
+    startNewGame();
+});
+
+document.getElementById('twoPlayerBtn').addEventListener('click', function() {
+    isSinglePlayer = false;
+    startNewGame();
+});
 
 function tryToWin(player) {
     for (let row = 0; row < 3; row++) {
@@ -159,3 +164,11 @@ function updateTurnDisplay() {
 
 startNewGame(); 
 
+
+function resetGame() {
+    playerScore = 0;
+    computerScore = 0;
+    document.getElementById('playerScore').innerText = '0';
+    document.getElementById('computerScore').innerText = '0';
+    startNewGame();
+}
