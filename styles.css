@@ -7,6 +7,15 @@ body {
     padding: 20px;
 }
 
+.scoreboard {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+.scoreboard div {
+    margin: 5px;
+}
+
+
 .game-info {
     margin-bottom: 20px;
 }

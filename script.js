@@ -6,6 +6,8 @@ let board = [
 
 let currentPlayer;
 let isComputerTurn;
+let playerScore = 0;
+let computerScore = 0;
 
 function startNewGame() {
     for (let row = 0; row < 3; row++) {
@@ -32,8 +34,16 @@ function makeMove(row, col) {
 function handleTurn() {
     updateBoard();
     if (checkWinner(currentPlayer)) {
+        let winner = currentPlayer === 'X' ? 'Player' : 'Computer';
         document.getElementById('playerTurn').innerText = 'Player ' + currentPlayer + ' Wins!';
-        alert('Player ' + currentPlayer + ' Wins!');
+        alert(winner + ' Wins!');
+        if (winner === 'Player') {
+            playerScore++;
+            document.getElementById('playerScore').textContent = playerScore;
+        } else {
+            computerScore++;
+            document.getElementById('computerScore').textContent = computerScore;
+        }
         startNewGame();
         return;
     } else if (isBoardFull()) {
