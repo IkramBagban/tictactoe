@@ -8,6 +8,10 @@
     
 </head>
 <body>
+    <div class="game-status">
+        <div id="currentMode"></div>
+        <div id="currentDifficulty"></div>
+    </div>
     
     <div class="scoreboard">
         <div>Player (X) Score: <span id="playerScore">0</span></div>
@@ -37,10 +41,22 @@
     <div style="display: flex; justify-content: center; margin-top: 5px;" >
         <button onclick="resetGame()">Reset Game</button>   
     </div>
-    <div class="mode-selector">
-        <button id="singlePlayerBtn">Single Player</button>
-        <button id="twoPlayerBtn">Two Players</button>
+    <div class="game-controls">
+        <div class="mode-selector">
+            <button id="singlePlayerBtn">Single Player</button>
+            <button id="twoPlayerBtn">Two Players</button>
+        </div>
+        <br>
+        <div id="difficultySelector" class="difficulty-selector">
+            <label for="difficultyLevel">Difficulty:</label>
+            <select id="difficultyLevel">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
     </div>
+        
     <script src="script.js"></script>
 </body>
 </html>

@@ -123,13 +123,34 @@ function makeComputerMove() {
 
 document.getElementById('singlePlayerBtn').addEventListener('click', function() {
     isSinglePlayer = true;
+    document.getElementById('difficultySelector').style.display = 'inline-block';
+    document.getElementById('currentMode').textContent = 'Mode: Single Player';
+    document.getElementById('currentDifficulty').textContent = 'Difficulty: ' + document.getElementById('difficultyLevel').value;
     startNewGame();
+    highlightButton(this);
 });
 
 document.getElementById('twoPlayerBtn').addEventListener('click', function() {
     isSinglePlayer = false;
+    document.getElementById('difficultySelector').style.display = 'none';
+    document.getElementById('currentMode').textContent = 'Mode: Two Players';
+    document.getElementById('currentDifficulty').textContent = '';
     startNewGame();
+    highlightButton(this);
 });
+
+document.getElementById('difficultyLevel').addEventListener('change', function() {
+    if(isSinglePlayer) {
+        document.getElementById('currentDifficulty').textContent = 'Difficulty: ' + this.value;
+    }
+});
+
+function highlightButton(activeButton) {
+    document.querySelectorAll('.mode-selector button').forEach(button => {
+        button.classList.remove('active');
+    });
+    activeButton.classList.add('active');
+}
 
 
 function tryToWin(player) {
